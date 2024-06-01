@@ -225,25 +225,10 @@ func main() {
 		return
 	}
 	defer file.Close()
-	exec.Command("cmd", "/c", "attrib -s -a -h -r result.go && attrib -s -a -h -r result.bat").Run()
 	err = exec.Command("cmd", "/c", "result.bat").Run()
 	if err != nil {
 		fmt.Printf("[-] 编译失败，出现错误：%v", err)
 		return
 	}
-	defer func() {
-		err = os.Remove("result.go")
-		if err != nil {
-			fmt.Printf("[-] 清理文件失败，出现错误：%v", err)
-			return
-		}
-
-		err = os.Remove("result.bat")
-		if err != nil {
-			fmt.Printf("[-] 清理文件失败，出现错误：%v", err)
-			return
-		}
-	}()
-
 	fmt.Println("[+] 木马程序生成完毕，当前目录下 ==> result.exe")
 }
